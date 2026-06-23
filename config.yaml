@@ -1,6 +1,6 @@
 rf:
-  center_freq_hz: 1575.42e6       # GPS L1 carrier frequency
-  sample_rate_hz: 2.4e6           # KrakenSDR sample rate (2.4 or 2.56 MSPS)
+  center_freq_hz: 1575420000.0    # GPS L1 carrier frequency (1575.42 MHz)
+  sample_rate_hz: 2400000.0       # KrakenSDR sample rate (2.4 MSPS)
   gain_db: 35                     # manual RX gain — tune experimentally at bench
 
 array:
@@ -24,6 +24,7 @@ dsp:
   az_scan_stop_deg: 180.0         # MUSIC azimuth scan stop
   az_scan_step_deg: 0.5           # MUSIC scan resolution
   interference_threshold_dbfs: -66.0   # skip MUSIC/MVDR below this peak power
+  music_threshold_db: 8.0             # MUSIC SNR gap threshold (peak vs median, dB)
 
 look_direction:
   # Fixed GPS look direction — DO NOT estimate from data (GPS is below noise floor)
