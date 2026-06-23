@@ -1,0 +1,10 @@
+.venv/
+__pycache__/
+*.pyc
+*.pyo
+.pytest_cache/
+recordings/*.iq
+recordings/*.log
+recordings/*.csv
+calibration/cal.yaml
+*.npy
