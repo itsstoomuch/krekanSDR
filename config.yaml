@@ -1,0 +1,52 @@
+rf:
+  center_freq_hz: 1575.42e6       # GPS L1 carrier frequency
+  sample_rate_hz: 2.4e6           # KrakenSDR sample rate (2.4 or 2.56 MSPS)
+  gain_db: 35                     # manual RX gain — tune experimentally at bench
+
+array:
+  n_elements: 4
+  layout: "2x2_URA"
+  spacing_m: 0.09515              # lambda/2 at GPS L1 — confirm against real CRPA
+  # Element order in the 2x2 grid:
+  #   [2]=(0,d)  [3]=(d,d)
+  #   [0]=(0,0)  [1]=(d,0)
+  element_positions:              # (x, y) in units of spacing_m
+    - [0, 0]                      # element 0
+    - [1, 0]                      # element 1
+    - [0, 1]                      # element 2
+    - [1, 1]                      # element 3
+
+dsp:
+  n_snapshots: 256                # covariance accumulation window (samples)
+  n_signals: 1                    # number of jammers to resolve (K) — set to 2 if 2 jammers expected
+  diag_load_factor: 10            # delta = factor * mean(noise eigenvalues)
+  az_scan_start_deg: -180.0       # MUSIC azimuth scan start
+  az_scan_stop_deg: 180.0         # MUSIC azimuth scan stop
+  az_scan_step_deg: 0.5           # MUSIC scan resolution
+  interference_threshold_dbfs: -66.0   # skip MUSIC/MVDR below this peak power
+
+look_direction:
+  # Fixed GPS look direction — DO NOT estimate from data (GPS is below noise floor)
+  # Broadside = zenith for a horizontal array (azimuth irrelevant at 90 deg elevation)
+  azimuth_deg: 0.0
+  elevation_deg: 90.0             # 90 = zenith (overhead)
+
+calibration:
+  cal_file: "calibration/cal.yaml"
+  n_cal_samples: 4096             # samples used for cross-correlation phase measurement
+  coherence_tolerance_deg: 2.0    # max acceptable phase drift to pass coherence check
+
+pipeline:
+  source: "file"                  # "file" for offline, "heimdall" for live hardware
+  input_file: "recordings/jammed.iq"
+  output_file: "recordings/combined.iq"
+  log_file: "recordings/pipeline_log.csv"
+
+gnss:
+  config_file: "gnss/antijam.conf"
+  cn0_log: "gnss/cn0.log"
+  baseline_cn0_dbhz: 42.0         # expected clean-sky C/N0 — update after Phase 2
+
+dashboard:
+  update_interval_ms: 300         # GUI refresh rate
+  cn0_history_sec: 60             # rolling window for C/N0 panel
