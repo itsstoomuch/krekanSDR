@@ -143,19 +143,19 @@
 ---
 
 ### 1.3 — iq_source/file_source.py
-- [ ] Implement `FileSource(filepath, n_channels=4, dtype=complex64)`:
+- [x] Implement `FileSource(filepath, n_channels=4, dtype=complex64)`:
   - Reads recorded .iq file in chunks of `n_snapshots`
   - Same interface as `heimdall_source` — yields `(4, N)` arrays
   - Loops file for continuous replay in dashboard test mode
-- [ ] **SAVE CHECKPOINT** — commit message: "feat: iq_source/file_source.py offline replay"
+- [x] **SAVE CHECKPOINT** — commit message: "feat: iq_source/file_source.py offline replay"
 
 ---
 
 ### 1.4 — iq_source/recorder.py
-- [ ] Implement `record(output_path, duration_sec)`:
+- [x] Implement `record(output_path, duration_sec)`:
   - Reads from `shared_data["rx_buffer"]` continuously
   - Writes interleaved complex64 to .iq file with header (n_channels, sample_rate, center_freq)
-- [ ] **SAVE CHECKPOINT** — commit message: "feat: iq_source/recorder.py 4-ch IQ capture"
+- [x] **SAVE CHECKPOINT** — commit message: "feat: iq_source/recorder.py 4-ch IQ capture"
 
 ---
 
@@ -235,10 +235,10 @@
 ---
 
 ### 4.1 — pipeline/offline.py
-- [ ] Implement full chain:
+- [x] Implement full chain:
   `FileSource → covariance → MUSIC → MVDR → beamform → write combined.iq`
-- [ ] Add per-frame logging: doa_est, suppression_db, latency_ms to CSV
-- [ ] **SAVE CHECKPOINT** — commit message: "feat: pipeline/offline.py end-to-end processing chain"
+- [x] Add per-frame logging: doa_est, suppression_db, latency_ms to CSV
+- [x] **SAVE CHECKPOINT** — commit message: "feat: pipeline/offline.py end-to-end processing chain"
 
 ---
 
